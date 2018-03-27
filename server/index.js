@@ -1,7 +1,9 @@
-const http = require('http')
+const express = require('express')
 
-const server = http.createServer((request, response) => {
-  response.end('OK')
+const app = express()
+
+app.get('/', (request, response) => {
+  response.send('OK')
 })
 
-server.listen(3247, () => console.log("j'écoute sur le port 3247"))
+app.listen(3247, () => console.log("j'écoute sur le port 3247"))
