@@ -6,12 +6,17 @@ const todos = [ todo1, todo2 ]
 
 const app = express()
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
+
 app.get('/', (request, response) => {
   response.send('OK')
 })
 
 app.get('/todos', (request, response) => {
-  response.setHeader('Access-Control-Allow-Origin', '*')
   response.json(todos)
 })
 
