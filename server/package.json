@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/akabab/todos/issues"
   },
-  "homepage": "https://github.com/akabab/todos#readme"
+  "homepage": "https://github.com/akabab/todos#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
