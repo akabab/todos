@@ -11,6 +11,7 @@ app.get('/', (request, response) => {
 })
 
 app.get('/todos', (request, response) => {
+  response.setHeader('Access-Control-Allow-Origin', '*')
   response.json(todos)
 })
 
