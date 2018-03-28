@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "node"
+branches:
+  only:
+    - dev
+    - master
+jobs:
+  include:
+    - stage: style
+      script: npm run lint:js
+      script: npm run lint:html
+      script: npm run lint:css
+    - stage: test
+      script: npm run test
