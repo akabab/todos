@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "server": "nodemon server --ignore client",
     "test": "echo 'no tests'",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
     "lint:js": "standard | snazzy",
@@ -9,6 +10,7 @@
   },
   "dependencies": {
     "htmllint-cli": "0.0.6",
+    "nodemon": "^1.17.2",
     "snazzy": "^7.1.1",
     "standard": "^11.0.1",
     "stylelint": "^9.1.3",
