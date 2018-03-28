@@ -2,9 +2,11 @@
   "private": true,
   "scripts": {
     "lint:js": "standard | snazzy",
-    "lint:css": "stylelint 'client/style/**/*.css'"
+    "lint:css": "stylelint 'client/style/**/*.css'",
+    "lint:html": "htmllint 'client/**/*.html'"
   },
   "dependencies": {
+    "htmllint-cli": "0.0.6",
     "snazzy": "^7.1.1",
     "standard": "^11.0.1",
     "stylelint": "^9.1.3",
