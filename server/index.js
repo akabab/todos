@@ -1,8 +1,14 @@
 const express = require('express')
+
 const todo1 = require('../mocks/todos/1.json')
 const todo2 = require('../mocks/todos/2.json')
+const todo3 = require('../mocks/todos/3.json')
 
-const todos = [ todo1, todo2 ]
+const todos = [
+  todo1,
+  todo2,
+  todo3,
+]
 
 const app = express()
 
