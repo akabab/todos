@@ -26,4 +26,11 @@ app.get('/todos', (request, response) => {
   response.json(todos)
 })
 
+app.get('/todos/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const todo = todos.find(todo => todo.id === id)
+
+  response.json(todo)
+})
+
 app.listen(3247, () => console.log("j'écoute sur le port 3247"))
