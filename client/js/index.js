@@ -1,4 +1,3 @@
-
 import { createTodoElement } from './components/todo.js'
 
 fetch('http://localhost:3247/todos')
@@ -6,5 +5,10 @@ fetch('http://localhost:3247/todos')
   .then(todos => {
     const todosElement = document.getElementById('todos')
 
-    todosElement.innerHTML = todos.map(createTodoElement).join('')
+    const todoRow = todo => `
+      <div class="row">
+        <div class="column">${createTodoElement(todo)}</div>
+      </div>`
+
+    todosElement.innerHTML = todos.map(todoRow).join('')
   })
