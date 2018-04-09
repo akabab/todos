@@ -1,11 +1,11 @@
 import { createTodoElement } from './components/todo.js'
 
-fetch('http://localhost:3247/todo')
+fetch('http://localhost:3247/todos')
   .then(response => response.json())
   .then(todos => {
-    const todosContainer = document.getElementsById('todos')
+    const todosContainer = document.getElementById('todos')
 
-    todosElements = todos.map(createTodoElement).join()
+    const todosElements = todos.map(createTodoElement).join('')
 
     todosContainer.innerHTML = todosElements
   })
