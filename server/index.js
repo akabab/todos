@@ -1,9 +1,10 @@
 const express = require('express')
+const fs = require('fs')
+const path = require('path')
 
 const todo1 = require('../mocks/todos/1.json')
 const todo2 = require('../mocks/todos/2.json')
 const todo3 = require('../mocks/todos/3.json')
-
 const todos = [
   todo1,
   todo2,
@@ -27,10 +28,15 @@ app.get('/todos', (request, response) => {
 })
 
 app.get('/todos/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const todo = todos.find(todo => todo.id === id)
-
-  response.json(todo)
+  const filename = `${request.params.id}.json`
+  const filepath = path.join(__dirname, '../mocks/todos/', filename)
+  fs.readFile(filepath, (err, data) => {
+    if (err) {
+      return response.status(404).end('todo not found')
+    }
+    response.header('Content-Type', 'application/json; charset=utf-8')
+    response.end(data)
+  })
 })
 
 app.listen(3247, () => console.log("j'écoute sur le port 3247"))
