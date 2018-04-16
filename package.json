@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "server": "nodemon server --ignore client",
+    "server": "nodemon server --ignore client --ignore db.json",
     "client": "http-server client",
     "build-client": "rm -rf docs && cp -r client docs",
     "test": "echo 'no tests'",
@@ -11,6 +11,7 @@
     "lint:html": "htmllint 'client/**/*.html'"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "htmllint-cli": "0.0.6",
     "http-server": "^0.11.1",
     "nodemon": "^1.17.2",

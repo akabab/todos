@@ -44,3 +44,25 @@ a {
 .fade:hover {
   opacity: 0.9;
 }
+
+input, textarea {
+  color: white;
+}
+
+#add-todo-form {
+  width: 30rem;
+}
+
+#add-todo-form textarea {
+  resize: vertical;
+}
+
+#add-todo-form input:focus, #add-todo-form textarea:focus {
+  border-color: #36F1CD;
+}
+
+.button {
+  background-color: #36F1CD !important;
+  color: #4C6085 !important;
+
+}
