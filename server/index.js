@@ -12,13 +12,25 @@ const storage = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-const upload = multer({ storage: storage })
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 500000, // 500 KB
+  },
+})
+
+const loggerMiddleware = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`)
+  next()
+}
 
 const db = require('./db.js')
 const todos = db.getSync()
 console.log(`${todos.length} todos loaded`)
 
 const app = express()
+
+app.use(loggerMiddleware)
 
 app.use('/public/images', express.static(publicImagesPath))
 
@@ -35,12 +47,15 @@ app.get('/', (req, res) => {
   res.send('ok')
 })
 
+
 app.post('/upload', upload.single('avatar'), (req, res, next) => {
   const data = req.body
   console.log(data)
 
   const file = req.file
   console.log(file)
+
+  res.json('ok')
 })
 
 app.get('/todos', async (req, res) => {
@@ -66,6 +81,19 @@ app.post('/todos', async (req, res) => {
   res.json(todos)
 })
 
+// Error handling
+
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err)
+  }
+
+  res.status(500)
+  res.json(err)
+})
+
+app.listen(port, () => console.log(`listening to port ${port}`))
+
 let n = 0
 const save = () => {
   if (todos.length !== n) {
@@ -75,5 +103,3 @@ const save = () => {
   }
 }
 setInterval(save, 5 * 1000)
-
-app.listen(port, () => console.log(`listening to port ${port}`))
