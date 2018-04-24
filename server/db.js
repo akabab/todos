@@ -1,8 +1,9 @@
 const mysql = require('mysql2/promise')
+
 const co = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  database: 'project1'
+  database: 'db_todos'
 })
 
 const exec = async (query, params) => {
