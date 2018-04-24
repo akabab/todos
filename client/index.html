@@ -11,6 +11,18 @@
 </head>
 <body>
   <a href="index.html"><h1>Todos</h1></a>
+  <form id="add-todo-form">
+    <label>
+      Title:
+      <input id="add-todo-title" type="text" name="title" placeholder="title" maxlength="64" required autofocus/>
+    </label>
+    <label>
+      Description:
+      <textarea id="add-todo-description" type="text" name="description" placeholder="description"></textarea>
+    </label>
+    <input class="button" type="submit" value="Add" />
+    <span id="add-todo-message"></span>
+  </form>
   <div id="todos" class="container">
     Loading todos...
   </div>
