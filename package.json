@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "server": "nodemon server --ignore client --ignore '*.json'",
+    "server": "nodemon server --ignore client --ignore '*.json' --ignore public",
     "client": "http-server client",
     "build-client": "rm -rf docs && cp -r client docs",
     "test": "echo 'no tests'",
