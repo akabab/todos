@@ -1,15 +1,5 @@
 const express = require('express')
-const fs = require('fs')
-const path = require('path')
-
-const todo1 = require('../mocks/todos/1.json')
-const todo2 = require('../mocks/todos/2.json')
-const todo3 = require('../mocks/todos/3.json')
-const todos = [
-  todo1,
-  todo2,
-  todo3,
-]
+const db = require('./db')
 
 const app = express()
 
@@ -19,24 +9,47 @@ app.use((request, response, next) => {
   next()
 })
 
+app.use((request, response, next) => {
+  if (request.method === 'GET') return next()
+
+  let accumulator = ''
+
+  request.on('data', data => {
+    accumulator += data
+  })
+
+  request.on('end', () => {
+    try {
+      request.body = JSON.parse(accumulator)
+      next()
+    } catch (err) {
+      next(err)
+    }
+  })
+})
+
 app.get('/', (request, response) => {
   response.send('OK')
 })
 
-app.get('/todos', (request, response) => {
-  response.json(todos)
+app.get('/todos', (request, response, next) => db.todo.read()
+  .then(todos => response.json(todos))
+  .catch(next))
+
+app.post('/todos', (request, response, next) => {
+  db.todo.create({
+    userId: 2,
+    title: request.body.title,
+    description: request.body.description,
+  })
+    .then(() => response.json('OK'))
+    .catch(next)
 })
 
-app.get('/todos/:id', (request, response) => {
-  const filename = `${request.params.id}.json`
-  const filepath = path.join(__dirname, '../mocks/todos/', filename)
-  fs.readFile(filepath, (err, data) => {
-    if (err) {
-      return response.status(404).end('todo not found')
-    }
-    response.header('Content-Type', 'application/json; charset=utf-8')
-    response.end(data)
-  })
+app.get('/todos/:id', async (request, response, next) => {
+  db.read.byId(request.params.id)
+    .then(todo => response.json(todo))
+    .catch(next)
 })
 
 app.listen(3247, () => console.log("j'écoute sur le port 3247"))
