@@ -17,6 +17,14 @@ const upload = multer({
   limits: {
     fileSize: 500000, // 500 KB
   },
+  // fileFilter: (req, file, cb) => {
+  //   console.log('filtering', file.originalname)
+  //   if (file.mimetype !== 'image/png') {
+  //     cb(Error('invalid file type'))
+  //   }
+
+  //   cb(null, true)
+  // }
 })
 
 const loggerMiddleware = (req, res, next) => {
@@ -32,7 +40,7 @@ const app = express()
 
 app.use(loggerMiddleware)
 
-app.use('/public/images', express.static(publicImagesPath))
+app.use('/images', express.static(publicImagesPath))
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -46,7 +54,6 @@ app.use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 app.get('/', (req, res) => {
   res.send('ok')
 })
-
 
 app.post('/upload', upload.single('avatar'), (req, res, next) => {
   const data = req.body
@@ -69,12 +76,13 @@ app.get('/todos/:id', async (req, res) => {
   res.json(todo)
 })
 
-app.post('/todos', async (req, res) => {
+app.post('/todos', upload.single('image'), async (req, res) => {
   const todo = req.body
 
   todo.id = todos.length
   todo.created = Date.now()
   todo.stars = []
+  todo.image = req.file ? req.file.filename : 'default.jpg'
 
   todos.push(todo)
 

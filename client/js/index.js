@@ -16,26 +16,22 @@ fetch('http://localhost:3247/todos')
   .then(response => response.json())
   .then(render)
 
-let sending = false
 const formMessage = document.getElementById('add-todo-message')
-const formElement = document.getElementById('add-todo-form')
-formElement.addEventListener('submit', e => {
+const form = document.getElementById('add-todo-form')
+
+form.addEventListener('submit', e => {
   e.preventDefault()
 
-  if (sending) { return }
+  const formData = new FormData(e.target)
 
-  sending = true
-
-  const todo = {
-    title: document.getElementById('add-todo-title').value,
-    description: document.getElementById('add-todo-description').value
-  }
-
-  sendTodo(todo)
-    .then(render)
-    .then(() => {
-      formMessage.innerHTML = 'all good'
-      setTimeout(() => formMessage.innerHTML = '', 1000)
-      sending = false
-    })
+  fetch('http://localhost:3247/todos', {
+    method: 'post',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(render)
+  .then(() => {
+    formMessage.innerHTML = 'all good'
+    setTimeout(() => formMessage.innerHTML = '', 1000)
+  })
 })
