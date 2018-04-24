@@ -3,12 +3,7 @@ import { createTodoElement } from './components/todo.js'
 const render = todos => {
   const todosElement = document.getElementById('todos')
 
-  const todoRow = todo => `
-    <div class="row">
-      <div class="column">${createTodoElement(todo)}</div>
-    </div>`
-
-  todosElement.innerHTML = todos.map(todoRow).join('')
+  todosElement.innerHTML = todos.map(createTodoElement).join('') || '<div>No Todos</div>'
 }
 
 fetch('http://localhost:3247/todos')
