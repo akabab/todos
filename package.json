@@ -3,6 +3,7 @@
   "scripts": {
     "server": "nodemon server --ignore client",
     "client": "http-server client",
+    "build-client": "rm -rf docs && cp -r client docs",
     "test": "echo 'no tests'",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
     "lint:js": "standard | snazzy",
