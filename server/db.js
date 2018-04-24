@@ -24,14 +24,14 @@ readTodo.latest = limit => exec(`SELECT * FROM todo
   LIMIT ?`, [ limit ])
 
 const createTodo = params => exec(`
-  INSERT INTO todo (title, userId, description)
-  VALUES (?, ?, ?)`, [ params.title, params.userId, params.description ])
+  INSERT INTO todo (title, userId, description, image)
+  VALUES (?, ?, ?, ?)`, [ params.title, params.userId, params.description, params.image ])
 
 const deleteTodo = id => exec(`DELETE FROM todo id=?`, [ id ])
 const updateTodo = params => exec(`
   UPDATE todo
-  SET title=?, userId=?, description=?
-  WHERE id=?`, [ params.title, params.userId, params.description, params.id ])
+  SET title=?, userId=?, description=?, image=?
+  WHERE id=?`, [ params.title, params.userId, params.description, params.image, params.id ])
 
 const readUser = () => exec('SELECT * FROM user')
 readUser.byId = id => exec1(`SELECT * FROM user WHERE id = ?`, [ id ])

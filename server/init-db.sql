@@ -15,6 +15,7 @@ CREATE TABLE todo (
   userId INT NOT NULL,
   title VARCHAR(128),
   description TEXT,
+  image TEXT,
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (userId)
