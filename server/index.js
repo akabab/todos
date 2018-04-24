@@ -1,5 +1,6 @@
 const express = require('express')
 const db = require('./db')
+const port = 3247
 
 const app = express()
 
@@ -52,4 +53,4 @@ app.get('/todos/:id', async (req, res, next) => {
     .catch(next)
 })
 
-app.listen(3247, () => console.log("j'écoute sur le port 3247"))
+app.listen(port, () => console.log(`server listenning on port: ${port}`))
