@@ -30,3 +30,4 @@ CREATE TABLE star (
   FOREIGN KEY (todoId) REFERENCES todo(id)
 ) ENGINE=INNODB;
 
+INSERT INTO user (name, email, password) VALUES ('demo', '', '');
