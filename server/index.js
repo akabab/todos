@@ -82,7 +82,7 @@ app.post('/todos', upload.single('image'), async (req, res) => {
   todo.id = todos.length
   todo.created = Date.now()
   todo.stars = []
-  todo.image = req.file ? req.file.filename : 'default.jpg'
+  todo.image = req.file ? req.file.filename : 'default.png'
 
   todos.push(todo)
 
