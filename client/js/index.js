@@ -19,6 +19,14 @@ fetch('http://localhost:3247/todos')
 const formMessage = document.getElementById('add-todo-message')
 const form = document.getElementById('add-todo-form')
 
+const handleResponse = res => {
+  if (res.status >= 400 && res.status < 600) {
+    return res.json().then(err => { throw Error(err.code) })
+  }
+
+  return res.json()
+}
+
 form.addEventListener('submit', e => {
   e.preventDefault()
 
@@ -28,10 +36,11 @@ form.addEventListener('submit', e => {
     method: 'post',
     body: formData
   })
-  .then(response => response.json())
+  .then(handleResponse)
   .then(render)
   .then(() => {
     formMessage.innerHTML = 'all good'
     setTimeout(() => formMessage.innerHTML = '', 1000)
   })
+  .catch(err => console.log(err))
 })
