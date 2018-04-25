@@ -33,7 +33,7 @@ const loggerMiddleware = (req, res, next) => {
 }
 
 const db = require('./db.js')
-const todos = db.getSync()
+let todos = db.getSync()
 console.log(`${todos.length} todos loaded`)
 
 const app = express()
@@ -44,6 +44,7 @@ app.use('/images', express.static(publicImagesPath))
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
@@ -74,6 +75,17 @@ app.get('/todos/:id', async (req, res) => {
   const todo = todos.find(todo => todo.id === id)
 
   res.json(todo)
+})
+
+app.delete('/todos/:id', async (req, res) => {
+  const id = Number(req.params.id)
+
+  const todoIndex = todos.findIndex(todo => todo.id === id)
+
+  // rm file
+  todos = todos.slice(0, todoIndex).concat(todos.slice(todoIndex + 1))
+
+  res.json(todos)
 })
 
 app.post('/todos', upload.single('image'), async (req, res) => {

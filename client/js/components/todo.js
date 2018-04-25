@@ -2,6 +2,7 @@ export const createTodoElement = todo => `
   <a class='todo fade' href='todo.html?id=${todo.id}'>
     <span>☆ ${todo.stars.length}</span>
     <h4>${todo.title}</h4>
+    <button class='delete-button' data-id='${todo.id}'>X</button>
   </a>
 `
 
