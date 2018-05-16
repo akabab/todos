@@ -1,10 +1,15 @@
 const express = require('express')
-const db = require('./db')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const fs = require('fs')
 const util = require('util')
 const path = require('path')
+const session = require('express-session')
+const FileStore = require('session-file-store')(session)
+
+const db = require('./db')
+
+const secret = 'supermegadursecret'
 
 const rename = util.promisify(fs.rename)
 
@@ -34,6 +39,12 @@ const loggerMiddleware = (req, res, next) => {
 }
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(session({
+  secret,
+  saveUninitialized: true,
+  resave: true,
+  store: new FileStore({ secret }),
+}))
 
 app.use(loggerMiddleware)
 
