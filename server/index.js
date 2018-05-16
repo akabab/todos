@@ -82,4 +82,15 @@ app.get('/todos/:id', async (req, res, next) => {
     .catch(next)
 })
 
+// Errors handling
+
+app.use((err, req, res, next) => {
+  if (err) {
+    res.json({ error: err.message })
+    console.error(err)
+  }
+
+  next()
+})
+
 app.listen(port, () => console.log(`server listenning on port: ${port}`))
