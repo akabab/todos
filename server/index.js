@@ -125,8 +125,12 @@ app.get('/todos', (req, res, next) => {
 })
 
 app.post('/todos', upload.single('image'), (req, res, next) => {
+  if (!req.session.user) {
+    return next(Error('Unauthorized'))
+  }
+
   db.todos.create({
-    userId: 1, // TODO: use auth id
+    userId: req.session.user.id,
     title: req.body.title,
     description: req.body.description,
     image: req.file ? req.file.filename : 'default.jpg'
