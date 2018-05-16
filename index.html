@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+  <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+  <link rel="stylesheet" href="app.css">
+  <title>TODOS</title>
+</head>
+<body>
+  <a href="index.html"><h1>Todos</h1></a>
+
+  <div id="auth" class="container"></div>
+
+  <form id="add-todo-form">
+    <label>
+      Title:
+      <input id="add-todo-title" type="text" name="title" placeholder="title" maxlength="64" required autofocus/>
+    </label>
+    <label>
+      Description:
+      <textarea id="add-todo-description" type="text" name="description" placeholder="description"></textarea>
+    </label>
+    <label>
+      Image:
+      <input id="add-todo-image" type="file" name="image"/>
+    </label>
+    <input class="button" type="submit" value="Add" />
+    <span id="add-todo-message"></span>
+  </form>
+  <div id="todos" class="container">
+    Loading todos...
+  </div>
+  <script type="module" src="js/index.js"></script>
+  <script type="module" src="js/signin.js"></script>
+</body>
+</html>

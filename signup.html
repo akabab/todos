@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+  <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+  <link rel="stylesheet" href="app.css">
+  <title>TODOS</title>
+</head>
+<body>
+  <a href="index.html"><h1>Todos</h1></a>
+
+  <!-- Sign-up form -->
+  <div id="" class="container">
+    <form id="sign-up-form">
+      <label>
+        Name:
+        <input type="text" name="name" required/>
+      </label>
+      <label>
+        Email:
+        <input type="text" name="email" required/>
+      </label>
+      <label>
+        Password:
+        <input id="signup-password" type="text" name="password" required/>
+      </label>
+      <label>
+        Confirm Password:
+        <input id="signup-confirm-password" type="text" name="confirm-password" required/>
+      </label>
+      <input class="button" type="submit" value="Sign Up" />
+      <span id="sign-up-message"></span>
+    </form>
+  </div>
+  <script type="module" src="js/signup.js"></script>
+</body>
+</html>

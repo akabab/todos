@@ -1,0 +1,67 @@
+/*
+Colors
+https://coolors.co/222222-4c6085-39a0ed-36f1cd-13c4a3
+
+#222222 black
+#4c6085 purple
+#39a0ed azul
+#36f1cd turquoise
+#13c4a3 green
+
+*/
+
+html {
+  background-color: #222;
+}
+
+body {
+  color: #36f1cd;
+  font-family: monospace;
+  margin: auto;
+  padding: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.todo {
+  display: flex;
+  align-items: center;
+  background-color: #36F1CD;
+  color: #4C6085;
+  width: 70%;
+  padding: 0.8rem;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.fade:hover {
+  opacity: 0.9;
+}
+
+input, textarea {
+  color: white;
+}
+
+#add-todo-form {
+  width: 30rem;
+}
+
+#add-todo-form textarea {
+  resize: vertical;
+}
+
+#add-todo-form input:focus, #add-todo-form textarea:focus {
+  border-color: #36F1CD;
+}
+
+.button {
+  background-color: #36F1CD !important;
+  color: #4C6085 !important;
+}
