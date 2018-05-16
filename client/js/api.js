@@ -1,4 +1,4 @@
-const host = 'http://localhost:3247'
+const host = 'https://wcs-todos.herokuapp.com'
 
 const _fetch = (method, route, body) => fetch(`${host}${route}`, {
   credentials: 'include',
