@@ -37,7 +37,6 @@ const upload = multer({
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(upload.single()) // as multipart/data parser
 
 app.use(session({
   secret,
@@ -79,7 +78,7 @@ app.get('/whoami', (req, res) => {
   res.json(prepareUser(req.session.user))
 })
 
-app.post('/sign-up', async (req, res, next) => {
+app.post('/sign-up', upload.single(), async (req, res, next) => {
   const { name, email, password } = req.body
 
   const userAlreadyExists = await db.users.read.byEmail(email)
@@ -95,7 +94,7 @@ app.post('/sign-up', async (req, res, next) => {
     .catch(next)
 })
 
-app.post('/sign-in', async (req, res, next) => {
+app.post('/sign-in', upload.single(), async (req, res, next) => {
   const { email, password } = req.body
 
   const users = await db.users.read()
