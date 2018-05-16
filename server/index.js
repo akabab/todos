@@ -1,5 +1,6 @@
 const express = require('express')
 const db = require('./db')
+const bodyParser = require('body-parser')
 const multer = require('multer')
 const fs = require('fs')
 const util = require('util')
@@ -31,6 +32,8 @@ const loggerMiddleware = (req, res, next) => {
   console.log(`${req.method} ${req.url}`)
   next()
 }
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(loggerMiddleware)
 
