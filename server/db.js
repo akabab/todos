@@ -1,13 +1,18 @@
 const mysql = require('mysql2/promise')
 
-const co = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'db_todos'
-})
+const url = process.env.DATABASE_URL
+const groups = url.match(/mysql:\/\/(\w+):(\w+)@([\w-\.]+)\/(\w+)?/)
+const options = {
+  host: groups[3],
+  user: groups[1],
+  password: groups[2],
+  database: groups[4],
+}
+const co = mysql.createConnection(options)
 
 const exec = async (query, params) => {
   const connection = await co
+  console.log({ query, params })
   const result = await connection.execute(query, params)
   return result[0]
 }
