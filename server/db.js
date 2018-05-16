@@ -7,13 +7,16 @@ const options = {
   user: groups[1],
   password: groups[2],
   database: groups[4],
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 }
-const co = mysql.createConnection(options)
+const pool = mysql.createPool(options)
 
 const exec = async (query, params) => {
-  const connection = await co
   console.log({ query, params })
-  const result = await connection.execute(query, params)
+  const result = await pool.execute(query, params)
+
   return result[0]
 }
 
