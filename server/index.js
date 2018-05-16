@@ -54,14 +54,71 @@ app.use((req, res, next) => {
 app.use('/images', express.static(publicImagesPath))
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Origin', req.headers.origin)
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Credentials', 'true')
   next()
 })
+
+
+// ROUTES
 
 app.get('/', (req, res) => {
   res.send('ok')
 })
+
+// Authentication
+
+app.get('/whoami', (req, res) => {
+  const { name, email } = req.session.user
+
+  res.json({ name, email })
+})
+
+app.post('/sign-up', async (req, res, next) => {
+  const { name, email, password } = req.body
+
+  const userAlreadyExists = await db.users.read.byEmail(email)
+
+  if (userAlreadyExists) {
+    return next(Error('User already exists'))
+  }
+
+  const credentials = { name, email, password }
+
+  db.users.create(credentials)
+    .then(() => res.json('ok'))
+    .catch(next)
+})
+
+app.post('/sign-in', async (req, res, next) => {
+  const { email, password } = req.body
+
+  const users = await db.users.read()
+
+  const user = users.find(user => user.email === email)
+
+  if (!user) {
+    return next(Error('User not found'))
+  }
+
+  if (user.password !== password) {
+    return next(Error('Invalid password'))
+  }
+
+  req.session.user = user
+  console.log(req.session)
+
+  res.json('ok')
+})
+
+app.get('/sign-out', (req, res, next) => {
+  req.session.user = {}
+
+  res.json('ok')
+})
+
+// Todos
 
 app.get('/todos', (req, res, next) => {
   db.todos.read()
