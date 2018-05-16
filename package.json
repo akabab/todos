@@ -8,7 +8,8 @@
     "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
     "lint:js": "standard | snazzy",
     "lint:css": "stylelint 'client/style/**/*.css'",
-    "lint:html": "htmllint 'client/**/*.html'"
+    "lint:html": "htmllint 'client/**/*.html'",
+    "postinstall": "cd server && npm i"
   },
   "dependencies": {
     "htmllint-cli": "0.0.6",
