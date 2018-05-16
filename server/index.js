@@ -33,8 +33,12 @@ const upload = multer({
   }
 })
 
+// MIDDLEWARES
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(upload.single()) // as multipart/data parser
+
 app.use(session({
   secret,
   saveUninitialized: true,
