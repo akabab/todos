@@ -13,7 +13,7 @@ const secret = 'supermegadursecret'
 
 const rename = util.promisify(fs.rename)
 
-const port = 3247
+const port = process.env.PORT || 3247
 
 const app = express()
 
