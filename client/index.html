@@ -11,6 +11,23 @@
 </head>
 <body>
   <a href="index.html"><h1>Todos</h1></a>
+
+  <!-- Sign-in form -->
+  <div id="" class="container">
+    <form id="sign-in-form">
+      <label>
+        Email:
+        <input type="text" name="email" required/>
+      </label>
+      <label>
+        Password:
+        <input type="text" name="password" required/>
+      </label>
+      <input class="button" type="submit" value="Sign In" />
+      <span id="sign-in-message"></span>
+    </form>
+  </div>
+
   <form id="add-todo-form">
     <label>
       Title:
@@ -31,5 +48,6 @@
     Loading todos...
   </div>
   <script type="module" src="js/index.js"></script>
+  <script type="module" src="js/signin.js"></script>
 </body>
 </html>
