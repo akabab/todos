@@ -33,10 +33,6 @@ const upload = multer({
   }
 })
 
-const loggerMiddleware = (req, res, next) => {
-  console.log(`${req.method} ${req.url}`)
-  next()
-}
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({
@@ -46,7 +42,10 @@ app.use(session({
   store: new FileStore({ secret }),
 }))
 
-app.use(loggerMiddleware)
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`, { user: req.session.user, cookie: req.headers.cookie })
+  next()
+})
 
 app.use('/images', express.static(publicImagesPath))
 
