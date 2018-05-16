@@ -69,10 +69,14 @@ app.get('/', (req, res) => {
 
 // Authentication
 
-app.get('/whoami', (req, res) => {
-  const { name, email } = req.session.user
+const prepareUser = user => {
+  if (!user) return {}
 
-  res.json({ name, email })
+  return { user: { id: user.id, name: user.name, email: user.email } }
+}
+
+app.get('/whoami', (req, res) => {
+  res.json(prepareUser(req.session.user))
 })
 
 app.post('/sign-up', async (req, res, next) => {
@@ -98,24 +102,19 @@ app.post('/sign-in', async (req, res, next) => {
 
   const user = users.find(user => user.email === email)
 
-  if (!user) {
-    return next(Error('User not found'))
-  }
-
-  if (user.password !== password) {
-    return next(Error('Invalid password'))
+  if (!user || user.password !== password) {
+    return next(Error('Invalid email or password'))
   }
 
   req.session.user = user
-  console.log(req.session)
 
-  res.json('ok')
+  res.json(prepareUser(req.session.user))
 })
 
 app.get('/sign-out', (req, res, next) => {
-  req.session.user = {}
+  req.session.user = undefined
 
-  res.json('ok')
+  res.json(prepareUser(req.session.user))
 })
 
 // Todos
