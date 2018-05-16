@@ -1,3 +1,4 @@
+import api from './api.js'
 import { createTodoElement } from './components/todo.js'
 
 const render = todos => {
@@ -6,9 +7,7 @@ const render = todos => {
   todosElement.innerHTML = todos.map(createTodoElement).join('') || '<div>No Todos</div>'
 }
 
-fetch('http://localhost:3247/todos')
-  .then(response => response.json())
-  .then(render)
+api.get('/todos').then(render)
 
 const formMessage = document.getElementById('add-todo-message')
 const form = document.getElementById('add-todo-form')
@@ -18,14 +17,10 @@ form.addEventListener('submit', e => {
 
   const formData = new FormData(e.target)
 
-  fetch('http://localhost:3247/todos', {
-    method: 'post',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(render)
-  .then(() => {
-    formMessage.innerHTML = 'all good'
-    setTimeout(() => formMessage.innerHTML = '', 1000)
-  })
+  api.post('/todos', formData)
+    .then(render)
+    .then(() => {
+      formMessage.innerHTML = 'all good'
+      setTimeout(() => formMessage.innerHTML = '', 1000)
+    })
 })
