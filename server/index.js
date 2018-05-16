@@ -47,24 +47,24 @@ app.get('/', (req, res) => {
 })
 
 app.get('/todos', (req, res, next) => {
-  db.todo.read()
+  db.todos.read()
     .then(todos => res.json(todos))
     .catch(next)
 })
 
 app.post('/todos', upload.single('image'), (req, res, next) => {
-  db.todo.create({
+  db.todos.create({
     userId: 1, // TODO: use auth id
     title: req.body.title,
     description: req.body.description,
     image: req.file ? req.file.filename : 'default.jpg'
   })
-  .then(() => db.todo.read().then(todos => res.json(todos)))
+  .then(() => db.todos.read().then(todos => res.json(todos)))
   .catch(next)
 })
 
 app.get('/todos/:id', async (req, res, next) => {
-  db.todo.read.byId(req.params.id)
+  db.todos.read.byId(req.params.id)
     .then(todo => res.json(todo))
     .catch(next)
 })

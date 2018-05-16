@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS db_todos;
 CREATE DATABASE db_todos;
 USE db_todos;
-CREATE TABLE user (
+CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(64),
   email VARCHAR(254),
@@ -10,7 +10,7 @@ CREATE TABLE user (
   PRIMARY KEY (id)
 ) ENGINE=INNODB;
 
-CREATE TABLE todo (
+CREATE TABLE todos (
   id INT NOT NULL AUTO_INCREMENT,
   userId INT NOT NULL,
   title VARCHAR(128),
@@ -19,15 +19,15 @@ CREATE TABLE todo (
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY (userId)
-    REFERENCES user(id)
+    REFERENCES users(id)
 ) ENGINE=INNODB;
 
-CREATE TABLE star (
+CREATE TABLE stars (
   userId INT NOT NULL,
   todoId INT NOT NULL,
   PRIMARY KEY (userId, todoId),
-  FOREIGN KEY (userId) REFERENCES user(id),
-  FOREIGN KEY (todoId) REFERENCES todo(id)
+  FOREIGN KEY (userId) REFERENCES users(id),
+  FOREIGN KEY (todoId) REFERENCES todos(id)
 ) ENGINE=INNODB;
 
-INSERT INTO user (name, email, password) VALUES ('demo', '', '');
+INSERT INTO users (name, email, password) VALUES ('demo', 'demo@demo.fr', 'pwd');
