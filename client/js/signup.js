@@ -21,6 +21,10 @@ const handleResponse = res => {
   if (formMessage) {
     formMessage.textContent = res.error || 'success'
   }
+
+  if (!res.error) {
+    setTimeout(() => { window.location = '/' }, 1000)
+  }
 }
 
 form.addEventListener('submit', e => {
