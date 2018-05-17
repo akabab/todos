@@ -11,6 +11,7 @@ const FileStore = require('session-file-store')(session)
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 const db = require('./db')
+const safe = require('./safe')
 
 const secret = process.env.SESSION_SECRET
 
@@ -90,7 +91,7 @@ app.post('/sign-up', upload.single(), async (req, res, next) => {
     return next(Error('User already exists'))
   }
 
-  const credentials = { name, email, password }
+  const credentials = { name, email, password: safe.encrypt(password) }
 
   db.users.create(credentials)
     .then(() => res.json('ok'))
@@ -104,7 +105,7 @@ app.post('/sign-in', upload.single(), async (req, res, next) => {
 
   const user = users.find(user => user.email === email)
 
-  if (!user || user.password !== password) {
+  if (!user || password !== safe.decrypt(user.password)) {
     return next(Error('Invalid email or password'))
   }
 
