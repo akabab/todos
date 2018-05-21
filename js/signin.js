@@ -29,6 +29,8 @@ const handleResponse = res => {
 
   document.user = res.user
 
+  document.refresh()
+
   if (res.user) {
 
     hideModal(signInModal)

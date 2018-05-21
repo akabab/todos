@@ -57,3 +57,5 @@ form.addEventListener('submit', e => {
 })
 
 api.get('/todos').then(render)
+
+document.refresh = () => api.get('/todos').then(render)

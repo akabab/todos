@@ -16,12 +16,12 @@ export const createTodoElement = todo => `
       <div class="text-secondary text-italic text-right text-sm">by ${todo.author} - ${todo.createdAt.slice(0, 10)}</div>
     </div>
     <div class="tile-action">
+      <button data-id=${todo.id} class="btn btn-sm btn-primary button-star">${document.user && todo.stars.includes(document.user.id) ? '★' : '☆'} ${todo.stars.length}</button>
       ${document.user && document.user.id === todo.userId
         ? `<button data-id=${todo.id} class="btn btn-sm btn-primary button-delete">
             <i class="icon icon-delete"></i>
           </button>`
         : ''}
-      <button data-id=${todo.id} class="btn btn-sm btn-primary button-star">${document.user && todo.stars.includes(document.user.id) ? '★' : '☆'} ${todo.stars.length}</button>
     </div>
   </div>
 `
