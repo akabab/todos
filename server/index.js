@@ -39,6 +39,14 @@ const upload = multer({
 
 // MIDDLEWARES
 
+const authRequired = (req, res, next) => {
+  if (!req.session.user) {
+    return next(Error('Unauthorized'))
+  }
+
+  next()
+}
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -50,7 +58,7 @@ app.use(session({
 }))
 
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`, { user: req.session.user, cookie: req.headers.cookie })
+  console.log(`${req.method} ${req.url}`, { sessionUser: req.session.user && req.session.user.email })
   next()
 })
 
@@ -128,11 +136,7 @@ app.get('/todos', (req, res, next) => {
     .catch(next)
 })
 
-app.post('/todos', upload.single('image'), (req, res, next) => {
-  if (!req.session.user) {
-    return next(Error('Unauthorized'))
-  }
-
+app.post('/todos', authRequired, upload.single('image'), (req, res, next) => {
   db.todos.create({
     userId: req.session.user.id,
     title: req.body.title,
