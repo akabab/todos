@@ -1,22 +1,12 @@
-export const signInForm = `
-  <form id="sign-in-form">
-    <label>
-      Email:
-      <input type="text" name="email" required/>
-    </label>
-    <label>
-      Password:
-      <input type="text" name="password" required/>
-    </label>
-    <input class="button" type="submit" value="Sign In" />
-    <a href="signup.html">Sign Up</a>
-    <span id="sign-in-message"></span>
-  </form>
+export const signInUpButtons = `
+  <button id="button-sign-in" class="btn btn-sm btn-primary">Sign In</button>
+  <button id="button-sign-up" class="btn btn-sm btn-link">Sign Up</button>
 `
 
 export const createLoggedElement = user => `
   <div>
-    Hello ${user.name}
-    <button id="sign-out-button">logout</button>
+    <span>${user.name}</span>
+    <button id="add-todo-button" class="btn btn-sm btn-primary"><i class="icon icon-plus"></i></button>
+    <button id="sign-out-button" class="btn btn-sm btn-primary"><i class="icon icon-shutdown"></i></button>
   </div>
 `

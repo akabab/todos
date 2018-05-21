@@ -1,10 +1,18 @@
 import api from './api.js'
 
+const signUpModal = document.getElementById('modal-sign-up')
+const signUpForm = document.getElementById('form-sign-up')
 const formMessage = document.getElementById('sign-up-message')
-const form = document.getElementById('sign-up-form')
 
-const passwordElement = document.getElementById('signup-password')
-const confirmPasswordElement = document.getElementById('signup-confirm-password')
+const showModal = modal => { modal.className = modal.className.replace('inactive', 'active') }
+const hideModal = modal => { modal.className = modal.className.replace('active', 'inactive') }
+
+const signUpCloseButton = Array.from(document.getElementsByClassName('modal-sign-up-close'))
+signUpCloseButton.forEach(b => b.addEventListener('click', () => hideModal(signUpModal)))
+
+
+const passwordElement = document.getElementById('sign-up-password')
+const confirmPasswordElement = document.getElementById('sign-up-confirm-password')
 
 const handlePasswordValidation = () => {
   const pwd = passwordElement.value
@@ -16,19 +24,22 @@ const handlePasswordValidation = () => {
 confirmPasswordElement.addEventListener('input', handlePasswordValidation)
 
 const handleResponse = res => {
-  const formMessage = document.getElementById('sign-up-message')
+  console.log({res})
 
   if (formMessage) {
-    formMessage.textContent = res.error || 'success'
+    formMessage.textContent = res.error || 'all good'
   }
 
+  if (res.error) return
+
   if (!res.error) {
-    setTimeout(() => { window.location = '/' }, 1000)
+    setTimeout(() => hideModal(signUpModal), 1000)
   }
 }
 
-form.addEventListener('submit', e => {
+signUpForm.addEventListener('submit', e => {
   e.preventDefault()
+  formMessage.textContent = ''
 
   const formData = new FormData(e.target)
 
