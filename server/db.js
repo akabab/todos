@@ -14,7 +14,7 @@ const options = {
 const pool = mysql.createPool(options)
 
 const exec = async (query, params) => {
-  console.log({ query, params })
+  console.log('SQL - ', { query, params })
   const result = await pool.execute(query, params)
 
   return result[0]
@@ -78,7 +78,9 @@ const prepareTodos = async todos => {
 
 const readTodos = () => exec('SELECT * FROM todos').then(prepareTodos)
 
-readTodos.byId = id => exec1(`SELECT * FROM todos WHERE id=?`, [ id ]).then(todo => prepareTodos([ todo ])[0])
+readTodos.byId = id => exec1(`SELECT * FROM todos WHERE id=?`, [ id ])
+  .then(todo => prepareTodos([ todo ]))
+  .then(todos => todos[0])
 
 // implementation with Master Philippe
 // readTodos.byId = id => exec1(`
