@@ -1,28 +1,55 @@
 /*
 Colors
-https://coolors.co/222222-4c6085-39a0ed-36f1cd-13c4a3
+https://coolors.co/51e5ff-440381-ec368d-ffa5a5-ffd6c0
 
-#222222 black
-#4c6085 purple
-#39a0ed azul
-#36f1cd turquoise
-#13c4a3 green
+#51e5ff - blue
+#440381 - purple
+#ec368d - dark pink
+#ffa5a5 - pink
+#ffd6c0 - clear pink
 
 */
 
-html {
-  background-color: #222;
+html, body {
+  background-color: #51E5FF;
 }
 
 body {
-  color: #36f1cd;
+  color: #FFA5A5;
   font-family: monospace;
-  margin: auto;
-  padding: 1rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
+}
+
+.navbar .navbar-brand {
+  font-size: 1.3rem;
+}
+
+.btn.btn-primary {
+  background-color: #EC368D;
+  border-color: #EC368D;
+}
+
+.btn.btn-link {
+  color: #ffd6c0;
+}
+
+.text-gray {
+  color: #FFD6C0;
+}
+
+.text-sm {
+  font-size: 0.7rem;
+}
+
+.divider {
+  border-top-color: #ffa5a5;
+}
+
+.modal-container {
+  background: #440381;
 }
 
 a {
@@ -30,38 +57,32 @@ a {
   color: inherit;
 }
 
+a.active, a:active, a:focus, a:hover {
+  color: #ffa5a5;
+}
+
+.btn.btn-primary:focus, .btn.btn-primary:hover {
+  background: #ffa5a5;
+  border-color: #ffa5a5;
+}
+
+.btn.btn-link.active, .btn.btn-link:active, .btn.btn-link:focus, .btn.btn-link:hover {
+  color: white;
+}
+
+.navbar {
+  background-color: #440381;
+  padding: 0.3rem;
+  box-shadow: 0px 0px 10px 5px #dcb6ff;
+}
+
 .todo {
-  display: flex;
-  align-items: center;
-  background-color: #36F1CD;
-  color: #4C6085;
-  width: 70%;
+  background-color: #440381;
   padding: 0.8rem;
-  margin: auto;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
+  box-shadow: 0px 0px 10px 5px #dcb6ff;
 }
 
 .fade:hover {
   opacity: 0.9;
-}
-
-input, textarea {
-  color: white;
-}
-
-#add-todo-form {
-  width: 30rem;
-}
-
-#add-todo-form textarea {
-  resize: vertical;
-}
-
-#add-todo-form input:focus, #add-todo-form textarea:focus {
-  border-color: #36F1CD;
-}
-
-.button {
-  background-color: #36F1CD !important;
-  color: #4C6085 !important;
 }
