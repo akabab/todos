@@ -16,8 +16,19 @@ const render = todos => {
     b.addEventListener('click', async e => {
       e.preventDefault()
 
-      const todoId = e.target.dataset.id
+      const todoId = e.currentTarget.dataset.id
       api.get(`/todos/vote/${todoId}`)
+        .then(res => !res.error && api.get('/todos').then(render)) // refresh
+    })
+  })
+
+  const deleteButtons = Array.from(document.getElementsByClassName('button-delete'))
+  deleteButtons.forEach(b => {
+    b.addEventListener('click', async e => {
+      e.preventDefault()
+
+      const todoId = e.currentTarget.dataset.id
+      api.delete(`/todos/${todoId}`)
         .then(res => !res.error && api.get('/todos').then(render)) // refresh
     })
   })
