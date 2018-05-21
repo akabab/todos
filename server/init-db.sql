@@ -26,8 +26,6 @@ CREATE TABLE stars (
   userId INT NOT NULL,
   todoId INT NOT NULL,
   PRIMARY KEY (userId, todoId),
-  FOREIGN KEY (userId) REFERENCES users(id),
-  FOREIGN KEY (todoId) REFERENCES todos(id)
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (todoId) REFERENCES todos(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
-
-INSERT INTO users (name, email, password) VALUES ('demo', 'demo@demo.fr', 'pwd');
