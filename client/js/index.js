@@ -1,11 +1,12 @@
 import api from './api.js'
-import { createTodoElement } from './components/todo.js'
+import { createTodoElement, noTodosContainer } from './components/todo.js'
+
 const formMessage = document.getElementById('add-todo-message')
 
 const render = todos => {
   const todosElement = document.getElementById('todos')
 
-  todosElement.innerHTML = todos.map(createTodoElement).join('') || '<div>No Todos</div>'
+  todosElement.innerHTML = todos.map(createTodoElement).join('') || noTodosContainer
 }
 
 const handleResponse = res => {
