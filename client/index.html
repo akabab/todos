@@ -3,37 +3,139 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-  <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
-  <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+  <!-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"> -->
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
   <link rel="stylesheet" href="app.css">
   <title>TODOS</title>
 </head>
 <body>
-  <a href="index.html"><h1>Todos</h1></a>
 
-  <div id="auth" class="container"></div>
+  <header class="navbar">
+    <section class="navbar-section">
+      <a href="index.html" class="navbar-brand ml-2 mr-2">Todos</a>
+      <a href="https://github.com/akabab/todos" class="btn btn-link">GitHub</a>
+    </section>
+    <section class="navbar-section">
+      <div id="auth-state" class="input-group input-inline mr-2">
+        <!-- ... -->
+      </div>
+    </section>
+  </header>
 
-  <form id="add-todo-form">
-    <label>
-      Title:
-      <input id="add-todo-title" type="text" name="title" placeholder="title" maxlength="64" required autofocus/>
-    </label>
-    <label>
-      Description:
-      <textarea id="add-todo-description" type="text" name="description" placeholder="description"></textarea>
-    </label>
-    <label>
-      Image:
-      <input id="add-todo-image" type="file" name="image"/>
-    </label>
-    <input class="button" type="submit" value="Add" />
-    <span id="add-todo-message"></span>
-  </form>
-  <div id="todos" class="container">
-    Loading todos...
+  <!-- SIGN IN MODAL -->
+
+  <div class="modal modal-sm inactive" id="modal-sign-in">
+    <a class="modal-sign-in-close modal-overlay" aria-label="Close"></a>
+    <div class="modal-container">
+      <div class="modal-header">
+        <a class="modal-sign-in-close btn btn-clear float-right" aria-label="Close"></a>
+        <div class="modal-title h5">Sign In</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <form id="form-sign-in">
+            <div class="form-group">
+              <label class="form-label label-sm">Email
+                <input class="form-input" type="text" name="email" placeholder="jeanmich@gmail.com" required/>
+              </label>
+              <label class="form-label label-sm">Password
+                <input class="form-input" type="password" name="password" placeholder="michmich974" required/>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span id="sign-in-message"></span>
+        <button class="btn btn-primary" form="form-sign-in" type="submit">Sign In</button>
+        <!-- <button class="btn btn-link">Sign Up</button> -->
+      </div>
+    </div>
   </div>
+
+  <!-- SIGN UP MODAL -->
+
+  <div class="modal modal-sm inactive" id="modal-sign-up">
+    <a class="modal-sign-up-close modal-overlay" aria-label="Close"></a>
+    <div class="modal-container">
+      <div class="modal-header">
+        <a class="modal-sign-up-close btn btn-clear float-right" aria-label="Close"></a>
+        <div class="modal-title h5">Sign Up</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <form id="form-sign-up">
+            <div class="form-group">
+              <label class="form-label label-sm">Name
+                <input class="form-input" type="text" name="name" placeholder="Jean-Michel" required/>
+              </label>
+              <label class="form-label label-sm">Email
+                <input class="form-input" type="text" name="email" placeholder="jeanmich@gmail.com" required/>
+              </label>
+              <label class="form-label label-sm">Password
+                <input class="form-input" id="sign-up-password" type="password" name="password" placeholder="michmich974" required/>
+              </label>
+              <label class="form-label label-sm">Confirm Password
+                <input class="form-input" id="sign-up-confirm-password" type="password" name="confirm-password" placeholder="michmich974" required/>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span id="sign-up-message"></span>
+        <button class="btn btn-primary" form="form-sign-up" type="submit">Sign Up</button>
+        <!-- <button class="btn btn-link">Sign In</button> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD TODO MODAL -->
+
+  <div class="modal modal-sm inactive" id="modal-todos-add">
+    <a class="modal-todos-add-close modal-overlay" aria-label="Close"></a>
+    <div class="modal-container">
+      <div class="modal-header">
+        <a class="modal-todos-add-close btn btn-clear float-right" aria-label="Close"></a>
+        <div class="modal-title h5">Create new todo</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <form id="form-todos-add">
+            <div class="form-group">
+              <label class="form-label label-sm">
+                Title:
+                <input class="form-input input-sm" type="text" name="title" placeholder="title" maxlength="64" required autofocus/>
+              </label>
+              <label class="form-label label-sm">
+                Description:
+                <textarea class="form-input input" type="text" name="description" placeholder="description" rows="4"></textarea>
+              </label>
+              <label class="form-label label-sm">
+                Image:
+                <input type="file" name="image"/>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span id="add-todo-message"></span>
+        <button class="btn btn-primary" form="form-todos-add" type="submit">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="columns">
+      <div id="todos" class="column col-8 col-sm-10 col-xs-12 col-mx-auto">Loading todos...</div>
+    </div>
+  </div>
+
   <script type="module" src="js/index.js"></script>
   <script type="module" src="js/signin.js"></script>
+  <script type="module" src="js/signup.js"></script>
 </body>
 </html>
