@@ -67,6 +67,7 @@ app.use('/images', express.static(publicImagesPath))
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin)
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTION')
   res.header('Access-Control-Allow-Credentials', 'true')
   next()
 })
@@ -163,6 +164,22 @@ app.get('/todos/vote/:id', authRequired, async (req, res, next) => {
     ? db.stars.delete({ todoId, userId })
     : db.stars.create({ todoId, userId })
   ).then(() => res.json('ok')).catch(next)
+})
+
+app.delete('/todos/:id', authRequired, async (req, res, next) => {
+  const todoId = req.params.id
+  const userId = req.session.user.id
+
+  const todo = await db.todos.read.byId(todoId)
+
+
+  if (!todo || userId != todo.userId) {
+    return next(Error('Invalid request'))
+  }
+
+  db.todos.delete(todoId)
+    .then(() => db.todos.read().then(todos => res.json(todos)))
+    .catch(next)
 })
 
 // Errors handling
