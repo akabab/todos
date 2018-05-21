@@ -3,6 +3,7 @@
   "scripts": {
     "server": "nodemon server --ignore client --ignore sessions",
     "client": "http-server client",
+    "deploy": "npm run deploy:client && npm run deploy:server",
     "deploy:client": "gh-pages -d client",
     "deploy:server": "git subtree push --prefix server heroku master",
     "test": "echo 'no tests'",
