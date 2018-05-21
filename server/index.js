@@ -153,6 +153,18 @@ app.get('/todos/:id', async (req, res, next) => {
     .catch(next)
 })
 
+app.get('/todos/vote/:id', authRequired, async (req, res, next) => {
+  const todoId = req.params.id
+  const userId = req.session.user.id
+
+  const hasVoted = await db.stars.read.byUserIdAndTodoId(userId, todoId)
+
+  return (hasVoted
+    ? db.stars.delete({ todoId, userId })
+    : db.stars.create({ todoId, userId })
+  ).then(() => res.json('ok')).catch(next)
+})
+
 // Errors handling
 
 app.use((err, req, res, next) => {
