@@ -3,7 +3,7 @@ import { apiUrl } from './config.js'
 const host = apiUrl
 
 const api = async (method, route, body) => {
-  const response = await fetch(`${host}${route}`, {
+  const response = await window.fetch(`${host}${route}`, {
     credentials: 'include',
     method,
     body

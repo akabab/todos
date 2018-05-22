@@ -12,13 +12,11 @@ const authContainer = document.getElementById('auth-state')
 const showModal = modal => { modal.className = modal.className.replace('inactive', 'active') }
 const hideModal = modal => { modal.className = modal.className.replace('active', 'inactive') }
 
-
 const signInCloseButton = Array.from(document.getElementsByClassName('modal-sign-in-close'))
 signInCloseButton.forEach(b => b.addEventListener('click', () => hideModal(signInModal)))
 
 const addTodoCloseButton = Array.from(document.getElementsByClassName('modal-todos-add-close'))
 addTodoCloseButton.forEach(b => b.addEventListener('click', () => hideModal(addTodoModal)))
-
 
 const handleResponse = q => Promise.resolve(q)
   .then(res => {
@@ -53,7 +51,6 @@ const handleResponse = q => Promise.resolve(q)
 
       showModal(addTodoModal)
     })
-
   })
   .catch(error => {
     if (formMessage) {
@@ -66,7 +63,7 @@ signInForm.addEventListener('submit', e => {
   e.preventDefault()
   formMessage.textContent = ''
 
-  const formData = new FormData(e.target)
+  const formData = new window.FormData(e.target)
 
   handleResponse(api.post('/sign-in', formData))
 })

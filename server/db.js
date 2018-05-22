@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise')
 
 const url = process.env.DATABASE_URL
-const groups = url.match(/mysql:\/\/(\w+):(\w+)@([\w-\.]+)\/(\w+)?/)
+const groups = url.match(/mysql:\/\/(\w+):(\w+)@([\w-.]+)\/(\w+)?/)
 const options = {
   host: groups[3],
   user: groups[1],
@@ -32,7 +32,6 @@ const createStar = params => exec(`INSERT INTO stars (userId, todoId) VALUES (?,
 
 const deleteStar = params => exec(`DELETE FROM stars WHERE userId=? AND todoId=?`, [ params.userId, params.todoId ])
 
-
 // USERS
 
 const readUsers = () => exec('SELECT * FROM users')
@@ -49,7 +48,6 @@ const updateUser = params => exec(`
   WHERE id=?`, [ params.name, params.email, params.password, params.id ])
 
 const deleteUser = id => exec(`DELETE FROM users WHERE id=?`, [ id ])
-
 
 // TODOS
 

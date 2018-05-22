@@ -7,5 +7,5 @@ const decrypt = text => crypto.AES.decrypt(text, secret).toString(crypto.enc.Utf
 
 module.exports = {
   encrypt,
-  decrypt,
+  decrypt
 }

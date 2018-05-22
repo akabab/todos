@@ -1,8 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
-const fs = require('fs')
-const util = require('util')
 const path = require('path')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
@@ -16,12 +14,9 @@ const imageUploader = require('./imageUploader.js')
 
 const secret = process.env.SESSION_SECRET
 
-const rename = util.promisify(fs.rename)
-
 const port = process.env.PORT || 3247
 
 const app = express()
-
 
 const publicImagesPath = path.join(__dirname, 'public/images')
 
@@ -34,7 +29,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 1000000, // 1 MB
+    fileSize: 1000000 // 1 MB
   },
   fileFilter: (req, files, cb) => {
     if (!files.mimetype.startsWith('image/')) { // accept image only
@@ -61,7 +56,7 @@ app.use(session({
   secret,
   saveUninitialized: true,
   resave: true,
-  store: new FileStore({ secret }),
+  store: new FileStore({ secret })
 }))
 
 app.use((req, res, next) => {
@@ -78,7 +73,6 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true')
   next()
 })
-
 
 // ROUTES
 
@@ -149,10 +143,9 @@ app.post('/todos', authRequired, upload.single('image'), async (req, res, next) 
     title: req.body.title,
     description: req.body.description,
     image: imageUrl
-  })
-  .then(() => db.todos.read())
-  .then(todos => res.json(todos))
-  .catch(next)
+  }).then(() => db.todos.read())
+    .then(todos => res.json(todos))
+    .catch(next)
 })
 
 app.get('/todos/:id', (req, res, next) => {
@@ -179,7 +172,7 @@ app.delete('/todos/:id', authRequired, (req, res, next) => {
 
   db.todos.read.byId(todoId)
     .then(async todo => {
-      if (!todo || userId != todo.userId) {
+      if (!todo || userId !== todo.userId) {
         throw Error('Invalid request')
       }
 

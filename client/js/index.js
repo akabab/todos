@@ -3,7 +3,7 @@ import api from './api.js'
 import { createTodoElement, noTodosContainer } from './components/todo.js'
 
 // Set projet title
-Array.from(document.getElementsByClassName('g-title')).forEach(e => e.textContent = projectTitle)
+Array.from(document.getElementsByClassName('g-title')).forEach(e => { e.textContent = projectTitle })
 
 const formMessage = document.getElementById('add-todo-message')
 
@@ -46,12 +46,12 @@ form.addEventListener('submit', e => {
   e.preventDefault()
   formMessage.textContent = ''
 
-  const formData = new FormData(e.target)
+  const formData = new window.FormData(e.target)
 
   api.post('/todos', formData)
     .then(render)
-    .then(() => formMessage.textContent = 'all good')
-    .catch(error => formMessage.textContent = error.message)
+    .then(() => { formMessage.textContent = 'all good' })
+    .catch(error => { formMessage.textContent = error.message })
 })
 
 refresh()
