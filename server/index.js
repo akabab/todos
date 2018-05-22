@@ -12,6 +12,7 @@ require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 const db = require('./db')
 const safe = require('./safe')
+const imageUploader = require('./imageUploader.js')
 
 const secret = process.env.SESSION_SECRET
 
@@ -137,12 +138,16 @@ app.get('/todos', (req, res, next) => {
     .catch(next)
 })
 
-app.post('/todos', authRequired, upload.single('image'), (req, res, next) => {
+app.post('/todos', authRequired, upload.single('image'), async (req, res, next) => {
+  const imageUrl = req.file
+    ? (await imageUploader.upload(path.join(publicImagesPath, req.file.filename)).catch(next)).secure_url
+    : process.env.DEFAULT_IMAGE_URL
+
   db.todos.create({
     userId: req.session.user.id,
     title: req.body.title,
     description: req.body.description,
-    image: req.file ? req.file.filename : 'default.jpg'
+    image: imageUrl
   })
   .then(() => db.todos.read().then(todos => res.json(todos)))
   .catch(next)
