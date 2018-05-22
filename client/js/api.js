@@ -1,6 +1,6 @@
 const host = 'https://wcs-todos.herokuapp.com'
 
-const api = (method, route, body) => {
+const api = async (method, route, body) => {
   const response = await fetch(`${host}${route}`, {
     credentials: 'include',
     method,

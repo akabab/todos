@@ -23,25 +23,17 @@ const handlePasswordValidation = () => {
 
 confirmPasswordElement.addEventListener('input', handlePasswordValidation)
 
-const handleResponse = res => {
-  console.log({res})
-
-  if (formMessage) {
-    formMessage.textContent = res.error || 'all good'
-  }
-
-  if (res.error) return
-
-  if (!res.error) {
-    setTimeout(() => hideModal(signUpModal), 1000)
-  }
-}
-
 signUpForm.addEventListener('submit', e => {
   e.preventDefault()
   formMessage.textContent = ''
 
   const formData = new FormData(e.target)
 
-  api.post('/sign-up', formData).then(handleResponse)
+  api.post('/sign-up', formData)
+    .then(() => setTimeout(() => hideModal(signUpModal), 1000))
+    .catch(error => {
+      if (formMessage) {
+        formMessage.textContent = error.message || 'all good'
+      }
+    })
 })

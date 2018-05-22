@@ -48,7 +48,6 @@ form.addEventListener('submit', e => {
     .then(render)
     .then(() => formMessage.textContent = 'all good')
     .catch(error => formMessage.textContent = error.message)
-    .then(handleResponse)
 })
 
 refresh()
