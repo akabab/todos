@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"> -->
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
   <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
   <link rel="stylesheet" href="app.css">
-  <title>TODOS</title>
+  <title class="g-title">Todos</title>
 </head>
 <body>
 
   <header class="navbar">
     <section class="navbar-section">
-      <a href="index.html" class="navbar-brand ml-2 mr-2">Todos</a>
+      <a href="index.html" class="g-title text-capitalize navbar-brand ml-2 mr-2">Todos</a>
       <a href="https://github.com/akabab/todos" target="_blank" class="btn btn-link">GitHub</a>
     </section>
     <section class="navbar-section">
@@ -50,7 +49,6 @@
       <div class="modal-footer">
         <span id="sign-in-message"></span>
         <button class="btn btn-primary" form="form-sign-in" type="submit">Sign In</button>
-        <!-- <button class="btn btn-link">Sign Up</button> -->
       </div>
     </div>
   </div>
@@ -87,7 +85,6 @@
       <div class="modal-footer">
         <span id="sign-up-message"></span>
         <button class="btn btn-primary" form="form-sign-up" type="submit">Sign Up</button>
-        <!-- <button class="btn btn-link">Sign In</button> -->
       </div>
     </div>
   </div>
@@ -99,7 +96,7 @@
     <div class="modal-container">
       <div class="modal-header">
         <a class="modal-todos-add-close btn btn-clear float-right" aria-label="Close"></a>
-        <div class="modal-title h5">Create new todo</div>
+        <div class="modal-title h5"><span class="g-title text-capitalize">todo</span>++</div>
       </div>
       <div class="modal-body">
         <div class="content">
@@ -130,7 +127,7 @@
 
   <div class="container mt-5">
     <div class="columns">
-      <div id="todos" class="column col-8 col-sm-10 col-xs-12 col-mx-auto">Loading todos...</div>
+      <div id="todos" class="column col-8 col-sm-10 col-xs-12 col-mx-auto">Loading...</div>
     </div>
   </div>
 
