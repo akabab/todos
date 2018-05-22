@@ -1,5 +1,9 @@
+import { projectTitle } from './config.js'
 import api from './api.js'
 import { createTodoElement, noTodosContainer } from './components/todo.js'
+
+// Set projet title
+Array.from(document.getElementsByClassName('g-title')).forEach(e => e.textContent = projectTitle)
 
 const formMessage = document.getElementById('add-todo-message')
 

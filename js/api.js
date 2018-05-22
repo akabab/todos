@@ -1,4 +1,6 @@
-const host = 'https://wcs-todos.herokuapp.com'
+import { apiUrl } from './config.js'
+
+const host = apiUrl
 
 const _fetch = (method, route, body) => fetch(`${host}${route}`, {
   credentials: 'include',
