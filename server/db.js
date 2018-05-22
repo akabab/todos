@@ -13,18 +13,13 @@ const options = {
 }
 const pool = mysql.createPool(options)
 
-const exec = async (query, params) => {
+const first = async q => (await q)[0]
+const exec = (query, params) => {
   console.log('SQL - ', { query, params })
-  const result = await pool.execute(query, params)
-
-  return result[0]
+  return first(pool.execute(query, params))
 }
 
-const exec1 = async (query, params) => {
-  const result = await exec(`${query} LIMIT 1`, params)
-  return result[0] // return only the first
-}
-
+const exec1 = (query, params) => first(exec(`${query} LIMIT 1`, params))
 
 // STARS
 
@@ -77,10 +72,10 @@ const prepareTodos = async todos => {
 
 const readTodos = () => exec('SELECT * FROM todos').then(prepareTodos)
 
-readTodos.byId = id => exec1(`SELECT * FROM todos WHERE id=?`, [ id ])
-  .then(todo => prepareTodos([ todo ]))
-  .then(todos => todos[0])
-
+readTodos.byId = async id => {
+  const todo = await exec1(`SELECT * FROM todos WHERE id=?`, [ id ])
+  return first(prepareTodos([ todo ]))
+}
 // implementation with Master Philippe
 // readTodos.byId = id => exec1(`
 //   SELECT id, userId, title, description, image, createdAt, nStars, CASE WHEN voted IS NULL THEN FALSE ELSE TRUE END AS hasVoted FROM todos
