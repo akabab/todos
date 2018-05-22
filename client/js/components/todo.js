@@ -6,7 +6,7 @@ export const createTodoElement = todo => `
     <div class="tile-icon hide-xs">
       <div class="example-tile-icon">
         <figure class="avatar avatar-lg">
-          <img src="${api.host}/images/${todo.image}" alt="Avatar">
+          <img src="${todo.image}">
         </figure>
       </div>
     </div>
