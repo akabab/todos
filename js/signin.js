@@ -12,27 +12,28 @@ const authContainer = document.getElementById('auth-state')
 const showModal = modal => { modal.className = modal.className.replace('inactive', 'active') }
 const hideModal = modal => { modal.className = modal.className.replace('active', 'inactive') }
 
-
 const signInCloseButton = Array.from(document.getElementsByClassName('modal-sign-in-close'))
 signInCloseButton.forEach(b => b.addEventListener('click', () => hideModal(signInModal)))
 
 const addTodoCloseButton = Array.from(document.getElementsByClassName('modal-todos-add-close'))
 addTodoCloseButton.forEach(b => b.addEventListener('click', () => hideModal(addTodoModal)))
 
+const handleResponse = q => Promise.resolve(q)
+  .then(res => {
+    document.user = res.user
 
-const handleResponse = res => {
-  if (formMessage) {
-    formMessage.textContent = res.error || ''
-  }
+    document.refresh()
 
-  if (res.error) return
+    if (!res.user) {
+      authContainer.innerHTML = signInUpButtons
 
-  document.user = res.user
+      const signInButton = document.getElementById('button-sign-in')
+      signInButton.addEventListener('click', () => showModal(signInModal))
 
-  document.refresh()
-
-  if (res.user) {
-
+      const signUpButton = document.getElementById('button-sign-up')
+      signUpButton.addEventListener('click', () => showModal(signUpModal))
+      return
+    }
     hideModal(signInModal)
 
     authContainer.innerHTML = createLoggedElement(res.user)
@@ -41,7 +42,7 @@ const handleResponse = res => {
     signOutButton.addEventListener('click', e => {
       e.preventDefault()
 
-      api.get('/sign-out').then(handleResponse)
+      handleResponse(api.get('/sign-out'))
     })
 
     const addTodoButton = document.getElementById('add-todo-button')
@@ -50,25 +51,21 @@ const handleResponse = res => {
 
       showModal(addTodoModal)
     })
-
-  } else {
-    authContainer.innerHTML = signInUpButtons
-
-    const signInButton = document.getElementById('button-sign-in')
-    signInButton.addEventListener('click', () => showModal(signInModal))
-
-    const signUpButton = document.getElementById('button-sign-up')
-    signUpButton.addEventListener('click', () => showModal(signUpModal))
-  }
-}
+  })
+  .catch(error => {
+    if (formMessage) {
+      formMessage.textContent = error.message || ''
+    }
+    console.error(error)
+  })
 
 signInForm.addEventListener('submit', e => {
   e.preventDefault()
   formMessage.textContent = ''
 
-  const formData = new FormData(e.target)
+  const formData = new window.FormData(e.target)
 
-  api.post('/sign-in', formData).then(handleResponse)
+  handleResponse(api.post('/sign-in', formData))
 })
 
-api.get('/whoami').then(handleResponse)
+handleResponse(api.get('/whoami'))
