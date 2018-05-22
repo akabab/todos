@@ -56,10 +56,14 @@ const deleteUser = id => exec(`DELETE FROM users WHERE id=?`, [ id ])
 const prepareTodos = async todos => {
   const [ users, stars ] = await Promise.all([ readUsers(), readStars() ])
 
-  const _stars = stars.reduce((o, ({ todoId, userId })) => {
-    o[todoId] = [ userId ].concat(o[todoId] || [])
-    return o
-  }, {})
+  const _stars = {}
+  for (const { todoId, userId } of stars) {
+    if (!_stars[todoId]) {
+      _stars[todoId] = [ userId ]
+    } else {
+      _stars[todoId].push(userId)
+    }
+  }
 
   const preparedTodos = todos.map(t => ({
     ...t,
