@@ -7,9 +7,9 @@ const refresh = q => Promise.resolve(q)
   .then(() => api.get('/todos').then(render))
   .catch(console.error)
 
+const byStarCount = (a, b) => b.stars.length - a.stars.length
 const render = todos => {
-  // sort
-  todos.sort((a, b) => b.stars.length - a.stars.length)
+  todos.sort(byStarCount)
 
   const todosElement = document.getElementById('todos')
 
