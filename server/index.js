@@ -81,11 +81,9 @@ app.get('/', (req, res) => {
 
 // Authentication
 
-const prepareUser = user => {
-  if (!user) return {}
-
-  return { user: { id: user.id, name: user.name, email: user.email } }
-}
+const prepareUser = user => user
+  ? { user: { id: user.id, name: user.name, email: user.email } }
+  : {}
 
 app.get('/whoami', (req, res) => {
   res.json(prepareUser(req.session.user))
