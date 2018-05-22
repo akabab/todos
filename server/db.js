@@ -70,7 +70,7 @@ const prepareTodos = async todos => {
   return preparedTodos
 }
 
-const readTodos = () => exec('SELECT * FROM todos').then(prepareTodos)
+const readTodos = async () => prepareTodos(await exec('SELECT * FROM todos'))
 
 readTodos.byId = async id => {
   const todo = await exec1(`SELECT * FROM todos WHERE id=?`, [ id ])
@@ -84,7 +84,7 @@ readTodos.byId = async id => {
 //   WHERE id=?
 // `, [ id, id, id ])
 
-readTodos.latests = limit => exec(`SELECT * FROM todos ORDER BY createdAt DESC LIMIT ?`, [ limit ]).then(prepareTodos)
+readTodos.latests = async limit => prepareTodos(await exec(`SELECT * FROM todos ORDER BY createdAt DESC LIMIT ?`, [ limit ]))
 
 const createTodo = params => exec(`
   INSERT INTO todos (title, userId, description, image)
