@@ -1,3 +1,3 @@
 export const projectTitle = 'Livecodings'
 
-export const apiUrl = 'https://wcs-livecodings-api.herokuapp.com/'
+export const apiUrl = 'https://wcs-livecodings-api.herokuapp.com'
