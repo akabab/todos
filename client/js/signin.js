@@ -61,7 +61,6 @@ const handleResponse = q => Promise.resolve(q)
     }
     console.error(error)
   })
-}
 
 signInForm.addEventListener('submit', e => {
   e.preventDefault()
