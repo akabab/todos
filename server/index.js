@@ -91,39 +91,36 @@ app.get('/whoami', (req, res) => {
   res.json(prepareUser(req.session.user))
 })
 
-app.post('/sign-up', upload.single(), async (req, res, next) => {
+app.post('/sign-up', upload.single(), (req, res, next) => {
   const { name, email, password } = req.body
 
-  const userAlreadyExists = await db.users.read.byEmail(email)
-
-  if (userAlreadyExists) {
-    return next(Error('User already exists'))
-  }
-
-  const credentials = { name, email, password: safe.encrypt(password) }
-
-  db.users.create(credentials)
-    .then(() => res.json('ok'))
+  db.users.read.byEmail(email)
+    .then(async userAlreadyExists => {
+      if (userAlreadyExists) {
+        throw Error('User already exists')
+      }
+      const credentials = { name, email, password: safe.encrypt(password) }
+      await db.users.create(credentials)
+      return res.json('ok')
+    })
     .catch(next)
 })
 
-app.post('/sign-in', upload.single(), async (req, res, next) => {
+app.post('/sign-in', upload.single(), (req, res, next) => {
   const { email, password } = req.body
 
-  const users = await db.users.read()
-
-  const user = users.find(user => user.email === email)
-
-  if (!user || password !== safe.decrypt(user.password)) {
-    return next(Error('Invalid email or password'))
-  }
-
-  req.session.user = user
-
-  res.json(prepareUser(req.session.user))
+  db.users.read()
+    .then(users => {
+      const user = users.find(user => user.email === email)
+      if (!user || password !== safe.decrypt(user.password)) {
+        throw Error('Invalid email or password')
+      }
+      req.session.user = user
+      res.json(prepareUser(req.session.user))
+    }).catch(next)
 })
 
-app.get('/sign-out', (req, res, next) => {
+app.get('/sign-out', (req, res) => {
   req.session.user = undefined
 
   res.json(prepareUser(req.session.user))
@@ -144,50 +141,50 @@ app.post('/todos', authRequired, upload.single('image'), (req, res, next) => {
     description: req.body.description,
     image: req.file ? req.file.filename : 'default.jpg'
   })
-  .then(() => db.todos.read().then(todos => res.json(todos)))
+  .then(() => db.todos.read())
+  .then(todos => res.json(todos))
   .catch(next)
 })
 
-app.get('/todos/:id', async (req, res, next) => {
+app.get('/todos/:id', (req, res, next) => {
   db.todos.read.byId(req.params.id)
     .then(todo => res.json(todo))
     .catch(next)
 })
 
-app.get('/todos/vote/:id', authRequired, async (req, res, next) => {
+app.get('/todos/vote/:id', authRequired, (req, res, next) => {
   const todoId = req.params.id
   const userId = req.session.user.id
 
-  const hasVoted = await db.stars.read.byUserIdAndTodoId(userId, todoId)
-
-  return (hasVoted
-    ? db.stars.delete({ todoId, userId })
-    : db.stars.create({ todoId, userId })
-  ).then(() => res.json('ok')).catch(next)
+  db.stars.read.byUserIdAndTodoId(userId, todoId)
+    .then(hasVoted => hasVoted
+      ? db.stars.delete({ todoId, userId })
+      : db.stars.create({ todoId, userId }))
+    .then(() => res.json('ok'))
+    .catch(next)
 })
 
-app.delete('/todos/:id', authRequired, async (req, res, next) => {
+app.delete('/todos/:id', authRequired, (req, res, next) => {
   const todoId = req.params.id
   const userId = req.session.user.id
 
-  const todo = await db.todos.read.byId(todoId)
+  db.todos.read.byId(todoId)
+    .then(async todo => {
+      if (!todo || userId != todo.userId) {
+        throw Error('Invalid request')
+      }
 
-
-  if (!todo || userId != todo.userId) {
-    return next(Error('Invalid request'))
-  }
-
-  db.todos.delete(todoId)
-    .then(() => db.todos.read().then(todos => res.json(todos)))
+      await db.todos.delete(todoId)
+      res.json(await db.todos.read())
+    })
     .catch(next)
 })
 
 // Errors handling
-
 app.use((err, req, res, next) => {
   if (err) {
     res.json({ error: err.message })
-    console.error(err)
+    return console.error(err)
   }
 
   next()
