@@ -8,8 +8,6 @@ branches:
 jobs:
   include:
     - stage: style
-      script: npm run lint:js
-      script: npm run lint:html
-      script: npm run lint:css
+      script: npm run lint
     - stage: test
       script: npm run test

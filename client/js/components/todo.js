@@ -1,3 +1,4 @@
+import { projectTitle } from '../config.js'
 import api from '../api.js'
 
 export const createTodoElement = todo => `
@@ -5,7 +6,7 @@ export const createTodoElement = todo => `
     <div class="tile-icon hide-xs">
       <div class="example-tile-icon">
         <figure class="avatar avatar-lg">
-          <img src="${api.host}/images/${todo.image}" alt="Avatar">
+          <img src="${todo.image}">
         </figure>
       </div>
     </div>
@@ -35,7 +36,7 @@ export const noTodosContainer = `
       <p class="empty-title h5">There is no todos yet</p>
       <p class="empty-subtitle">Click the button to add a new todo.</p>
       <div class="empty-action">
-        <button class="btn btn-primary">Add a todo</button>
+        <button class="btn btn-primary">${projectTitle}++</button>
       </div>
     </div>
   </div>

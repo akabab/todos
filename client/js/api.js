@@ -1,4 +1,6 @@
-const host = 'https://wcs-todos.herokuapp.com'
+import { apiUrl } from './config.js'
+
+const host = apiUrl
 
 const api = async (method, route, body) => {
   const response = await fetch(`${host}${route}`, {
