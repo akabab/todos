@@ -35,6 +35,12 @@ const upload = multer({
   storage: storage,
   limits: {
     fileSize: 1000000, // 1 MB
+  },
+  fileFilter: (req, files, cb) => {
+    if (!files.mimetype.startsWith('image/')) { // accept image only
+      return cb(Error('Invalid file type'))
+    }
+    cb(null, true)
   }
 })
 
