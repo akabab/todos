@@ -1,4 +1,5 @@
 {
   "plugins": [],
-  "indent-width": 2
+  "indent-width": 2,
+  "id-class-style": "dash"
 }
