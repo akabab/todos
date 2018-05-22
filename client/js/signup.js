@@ -31,9 +31,5 @@ signUpForm.addEventListener('submit', e => {
 
   api.post('/sign-up', formData)
     .then(() => setTimeout(() => hideModal(signUpModal), 1000))
-    .catch(error => {
-      if (formMessage) {
-        formMessage.textContent = error.message || 'all good'
-      }
-    })
+    .catch(error => formMessage.textContent = error.message || 'all good')
 })
