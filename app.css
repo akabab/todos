@@ -71,8 +71,11 @@ a.active, a:active, a:focus, a:hover {
 }
 
 .navbar {
-  background-color: #440381;
   padding: 0.3rem;
+}
+
+.navbar, .footer {
+  background-color: #440381;
   box-shadow: 0px 0px 10px 5px #dcb6ff;
 }
 
@@ -88,17 +91,29 @@ a.active, a:active, a:focus, a:hover {
 
 #todos {
   margin-top: 2rem;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
 .todo {
   background-color: #440381;
   padding: 0.8rem;
-  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: 0px 0px 10px 5px #dcb6ff;
   text-align: left;
 }
 
 .fade:hover {
   opacity: 0.9;
+}
+
+.footer {
+  background: #440381;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
 }
