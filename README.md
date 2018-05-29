@@ -7,6 +7,6 @@
 Todo list with up/down vote system, backed by an API, user authentication
 
 **/!\ Project not maintained, it has been splited and moved to:**
-- [server](https://github.com/akabab/todos-server)
-- [client](https://github.com/akabab/todos-client)
-- +[client-react](https://github.com/akabab/todos-client-react)
+- server -> https://github.com/akabab/todos-server
+- client -> https://github.com/akabab/todos-client
+  - client-react -> https://github.com/akabab/todos-client-react
